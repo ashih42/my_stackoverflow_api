@@ -23,7 +23,8 @@ impl QuestionsDaoImpl {
 #[async_trait]
 impl QuestionsDao for QuestionsDaoImpl {
     async fn create_question(&self, question: Question) -> Result<QuestionDetail, DBError> {
-        let record = sqlx::query!(
+        let question = sqlx::query_as!(
+            QuestionDetail,
             r#"
                 INSERT INTO questions ( title, description )
                 VALUES ( $1, $2 )
@@ -36,12 +37,7 @@ impl QuestionsDao for QuestionsDaoImpl {
         .await
         .map_err(|e| DBError::Other(Box::new(e)))?;
 
-        Ok(QuestionDetail {
-            question_uuid: record.question_uuid.to_string(),
-            title: record.title,
-            description: record.description,
-            created_at: record.created_at.to_string(),
-        })
+        Ok(question)
     }
 
     async fn delete_question(&self, question_uuid: String) -> Result<(), DBError> {
@@ -58,20 +54,10 @@ impl QuestionsDao for QuestionsDaoImpl {
     }
 
     async fn get_questions(&self) -> Result<Vec<QuestionDetail>, DBError> {
-        let records = sqlx::query!("SELECT * FROM questions")
+        let questions = sqlx::query_as!(QuestionDetail, "SELECT * FROM questions")
             .fetch_all(&self.db)
             .await
             .map_err(|e| DBError::Other(Box::new(e)))?;
-
-        let questions = records
-            .into_iter()
-            .map(|r| QuestionDetail {
-                question_uuid: r.question_uuid.to_string(),
-                title: r.title,
-                description: r.description,
-                created_at: r.created_at.to_string(),
-            })
-            .collect();
 
         Ok(questions)
     }

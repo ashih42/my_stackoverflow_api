@@ -1,3 +1,6 @@
+#[allow(unused_imports)]
+use time::OffsetDateTime; // This is used in unit tests.
+
 use crate::{
     models::{Answer, AnswerDetail, AnswerId, DBError, Question, QuestionDetail, QuestionId},
     persistance::{answers_dao::AnswersDao, questions_dao::QuestionsDao},
@@ -233,7 +236,7 @@ mod tests {
             question_uuid: "123".to_owned(),
             title: question.title.clone(),
             description: question.description.clone(),
-            created_at: "now".to_owned(),
+            created_at: OffsetDateTime::now_utc(),
         };
 
         let mut questions_dao = QuestionsDaoMock::new();
@@ -276,7 +279,7 @@ mod tests {
             question_uuid: "123".to_owned(),
             title: "test title".to_owned(),
             description: "test description".to_owned(),
-            created_at: "now".to_owned(),
+            created_at: OffsetDateTime::now_utc(),
         };
 
         let mut questions_dao = QuestionsDaoMock::new();
@@ -358,7 +361,7 @@ mod tests {
             answer_uuid: "456".to_owned(),
             question_uuid: answer.question_uuid.clone(),
             content: answer.content.clone(),
-            created_at: "now".to_owned(),
+            created_at: OffsetDateTime::now_utc(),
         };
 
         let mut answers_dao = AnswersDaoMock::new();
@@ -425,7 +428,7 @@ mod tests {
             answer_uuid: "456".to_owned(),
             question_uuid: "123".to_owned(),
             content: "test content".to_owned(),
-            created_at: "now".to_owned(),
+            created_at: OffsetDateTime::now_utc(),
         };
 
         let question_id = QuestionId {

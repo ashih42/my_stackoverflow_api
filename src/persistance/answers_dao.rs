@@ -30,7 +30,8 @@ impl AnswersDao for AnswersDaoImpl {
             ))
         })?;
 
-        let record = sqlx::query!(
+        let answer = sqlx::query_as!(
+            AnswerDetail,
             r#"
                 INSERT INTO answers ( question_uuid, content )
                 VALUES ( $1, $2 )
@@ -54,12 +55,7 @@ impl AnswersDao for AnswersDaoImpl {
             DBError::Other(Box::new(err))
         })?;
 
-        Ok(AnswerDetail {
-            answer_uuid: record.answer_uuid.to_string(),
-            question_uuid: record.question_uuid.to_string(),
-            content: record.content,
-            created_at: record.created_at.to_string(),
-        })
+        Ok(answer)
     }
 
     async fn delete_answer(&self, answer_uuid: String) -> Result<(), DBError> {
@@ -80,20 +76,14 @@ impl AnswersDao for AnswersDaoImpl {
             DBError::InvalidUUID(format!("Could not parse question UUID: {}", question_uuid))
         })?;
 
-        let records = sqlx::query!("SELECT * FROM answers WHERE question_uuid = $1", uuid)
-            .fetch_all(&self.db)
-            .await
-            .map_err(|e| DBError::Other(Box::new(e)))?;
-
-        let answers = records
-            .into_iter()
-            .map(|r| AnswerDetail {
-                answer_uuid: r.answer_uuid.to_string(),
-                question_uuid: r.question_uuid.to_string(),
-                content: r.content,
-                created_at: r.created_at.to_string(),
-            })
-            .collect();
+        let answers = sqlx::query_as!(
+            AnswerDetail,
+            "SELECT * FROM answers WHERE question_uuid = $1",
+            uuid
+        )
+        .fetch_all(&self.db)
+        .await
+        .map_err(|e| DBError::Other(Box::new(e)))?;
 
         Ok(answers)
     }

@@ -1,5 +1,7 @@
 use serde::{Deserialize, Serialize};
+use sqlx::FromRow;
 use thiserror::Error;
+use time::OffsetDateTime;
 
 #[derive(Serialize, Deserialize)]
 pub struct Question {
@@ -7,12 +9,14 @@ pub struct Question {
     pub description: String,
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq, Clone)]
+#[derive(Serialize, Deserialize, Debug, PartialEq, Clone, FromRow)]
 pub struct QuestionDetail {
     pub question_uuid: String,
     pub title: String,
     pub description: String,
-    pub created_at: String,
+
+    #[serde(with = "time::serde::rfc3339")]
+    pub created_at: OffsetDateTime,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -28,12 +32,14 @@ pub struct Answer {
     pub content: String,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, FromRow)]
 pub struct AnswerDetail {
     pub answer_uuid: String,
     pub question_uuid: String,
     pub content: String,
-    pub created_at: String,
+
+    #[serde(with = "time::serde::rfc3339")]
+    pub created_at: OffsetDateTime,
 }
 
 #[derive(Serialize, Deserialize)]
