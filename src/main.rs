@@ -18,8 +18,10 @@ mod handlers;
 mod models;
 mod persistance;
 
-use cors::*;
-use handlers::*;
+use cors::CORS;
+use handlers::{
+    create_answer, create_question, delete_answer, delete_question, read_answers, read_questions,
+};
 
 #[launch]
 async fn rocket() -> _ {
