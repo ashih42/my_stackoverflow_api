@@ -15,10 +15,10 @@ impl HandlerError {
     }
 }
 
+#[allow(clippy::borrowed_box)]
 pub async fn create_question(
     question: Question,
     questions_dao: &Box<dyn QuestionsDao + Sync + Send>,
-    // questions_dao: &(dyn QuestionsDao + Sync + Send),  // TODO: try refactoring to this
 ) -> Result<QuestionDetail, HandlerError> {
     let question = questions_dao.create_question(question).await;
 
@@ -31,6 +31,7 @@ pub async fn create_question(
     }
 }
 
+#[allow(clippy::borrowed_box)]
 pub async fn read_questions(
     questions_dao: &Box<dyn QuestionsDao + Sync + Send>,
 ) -> Result<Vec<QuestionDetail>, HandlerError> {
@@ -45,6 +46,7 @@ pub async fn read_questions(
     }
 }
 
+#[allow(clippy::borrowed_box)]
 pub async fn delete_question(
     question_uuid: QuestionId,
     questions_dao: &Box<dyn QuestionsDao + Sync + Send>,
@@ -60,6 +62,7 @@ pub async fn delete_question(
     Ok(())
 }
 
+#[allow(clippy::borrowed_box)]
 pub async fn create_answer(
     answer: Answer,
     answers_dao: &Box<dyn AnswersDao + Send + Sync>,
@@ -79,6 +82,7 @@ pub async fn create_answer(
     }
 }
 
+#[allow(clippy::borrowed_box)]
 pub async fn read_answers(
     question_uuid: QuestionId,
     answers_dao: &Box<dyn AnswersDao + Send + Sync>,
@@ -94,6 +98,7 @@ pub async fn read_answers(
     }
 }
 
+#[allow(clippy::borrowed_box)]
 pub async fn delete_answer(
     answer_uuid: AnswerId,
     answers_dao: &Box<dyn AnswersDao + Send + Sync>,
@@ -399,8 +404,7 @@ mod tests {
 
         let mut answers_dao = AnswersDaoMock::new();
 
-        answers_dao.mock_create_answer(Err(DBError::Other(Box::new(std::io::Error::new(
-            std::io::ErrorKind::Other,
+        answers_dao.mock_create_answer(Err(DBError::Other(Box::new(std::io::Error::other(
             "oh no!",
         )))));
 
