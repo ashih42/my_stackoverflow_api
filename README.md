@@ -19,9 +19,9 @@ See [HERE](https://documenter.getpostman.com/view/8662105/2sBXwtp8ws).
 
 ## Developer Notes
 
-### Entity Relation Diagram
+### Entity Relationship Diagram
 
-TODO
+![Entity Relationship Diagram](./doc/entity_relationship_diagram.png)
 
 ### How to Set Up a Local Postgres Server
 
