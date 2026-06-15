@@ -42,11 +42,11 @@ DATABASE_URL=postgres://postgres:postgrespw@localhost:55008
 Install [sqlx-cli](https://github.com/transact-rs/sqlx/tree/main/sqlx-cli).
 
 ```
-$ cargo install sqlx-cli
+cargo install sqlx-cli
 ```
 
 Apply database migrations.
 
 ```
-$ sqlx migrate run
+sqlx migrate run
 ```
