@@ -11,11 +11,11 @@ This app models 2 entities:
 
 A `Question` may have 0 or more `Answers`.
 
-In this app, you can perform CRUD operations on Question and Answer entities.
+In this app, you can perform CRUD operations on Question and Answer entities with HTTP methods.
 
-## HTTP API Documentation
+## API Documentation
 
-TODO
+See [HERE](https://documenter.getpostman.com/view/8662105/2sBXwtp8ws).
 
 ## Developer Notes
 
