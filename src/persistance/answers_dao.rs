@@ -42,7 +42,7 @@ impl AnswersDao for AnswersDaoImpl {
         )
         .fetch_one(&self.db)
         .await
-        .map_err(|err: sqlx::Error| {
+        .map_err(|err| {
             if let sqlx::Error::Database(database_err) = &err
                 && let Some(code) = database_err.code()
                 && code == postgres_error_codes::FOREIGN_KEY_VIOLATION
