@@ -1,6 +1,3 @@
-#[allow(unused_imports)]
-use time::OffsetDateTime; // This is used in unit tests.
-
 use crate::{
     models::{Answer, AnswerDetail, AnswerId, DBError, Question, QuestionDetail, QuestionId},
     persistence::{answers_dao::AnswersDao, questions_dao::QuestionsDao},
@@ -18,7 +15,6 @@ impl HandlerError {
     }
 }
 
-#[allow(clippy::borrowed_box)]
 pub async fn create_question(
     question: Question,
     questions_dao: &dyn QuestionsDao,
@@ -34,7 +30,6 @@ pub async fn create_question(
     }
 }
 
-#[allow(clippy::borrowed_box)]
 pub async fn read_questions(
     questions_dao: &dyn QuestionsDao,
 ) -> Result<Vec<QuestionDetail>, HandlerError> {
@@ -49,7 +44,6 @@ pub async fn read_questions(
     }
 }
 
-#[allow(clippy::borrowed_box)]
 pub async fn delete_question(
     question_uuid: QuestionId,
     questions_dao: &dyn QuestionsDao,
@@ -65,7 +59,6 @@ pub async fn delete_question(
     Ok(())
 }
 
-#[allow(clippy::borrowed_box)]
 pub async fn create_answer(
     answer: Answer,
     answers_dao: &dyn AnswersDao,
@@ -85,7 +78,6 @@ pub async fn create_answer(
     }
 }
 
-#[allow(clippy::borrowed_box)]
 pub async fn read_answers(
     question_uuid: QuestionId,
     answers_dao: &dyn AnswersDao,
@@ -101,7 +93,6 @@ pub async fn read_answers(
     }
 }
 
-#[allow(clippy::borrowed_box)]
 pub async fn delete_answer(
     answer_uuid: AnswerId,
     answers_dao: &dyn AnswersDao,
@@ -124,6 +115,7 @@ mod tests {
     use super::*;
 
     use async_trait::async_trait;
+    use time::OffsetDateTime;
     use tokio::sync::Mutex;
 
     struct QuestionsDaoMock {
