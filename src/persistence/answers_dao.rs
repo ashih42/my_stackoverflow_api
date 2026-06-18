@@ -4,7 +4,7 @@ use sqlx::{PgPool, types::Uuid};
 use crate::models::{Answer, AnswerDetail, DBError, postgres_error_codes};
 
 #[async_trait]
-pub trait AnswersDao {
+pub trait AnswersDao: Send + Sync {
     async fn create_answer(&self, answer: Answer) -> Result<AnswerDetail, DBError>;
     async fn delete_answer(&self, answer_uuid: String) -> Result<(), DBError>;
     async fn get_answers(&self, question_uuid: String) -> Result<Vec<AnswerDetail>, DBError>;

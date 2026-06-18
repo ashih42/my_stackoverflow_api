@@ -44,6 +44,6 @@ async fn rocket() -> _ {
             ],
         )
         .attach(CORS)
-        .manage(Box::new(questions_dao) as Box<dyn QuestionsDao + Send + Sync>)
-        .manage(Box::new(answers_dao) as Box<dyn AnswersDao + Send + Sync>)
+        .manage(Box::new(questions_dao) as Box<dyn QuestionsDao>)
+        .manage(Box::new(answers_dao) as Box<dyn AnswersDao>)
 }

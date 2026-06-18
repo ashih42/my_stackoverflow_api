@@ -1,6 +1,8 @@
-# My StackOverflow API (Rocket)
+# My StackOverflow API (Rocket vs Axum)
 
-This is a simple [StackOverflow](https://stackoverflow.com/)-like API server built using the [Rocket](https://rocket.rs/) framework in Rust, talking to a Postgres database server, and returning the results over HTTP messages.
+This is a simple [StackOverflow](https://stackoverflow.com/)-like API server, which talks to a Postgres database server and returns data over HTTP messages through a REST API.
+
+This project includes 2 implementations in Rust, one built with [Rocket](https://rocket.rs/) framework, another built with [Axum](https://github.com/tokio-rs/axum) framework.
 
 ## What This App Does
 
@@ -13,7 +15,21 @@ A `Question` may have 0 or more `Answers`.
 
 In this app, you can perform CRUD operations on Question and Answer entities with HTTP methods.
 
-## API Documentation
+## How to Run
+
+Start the server with Rocket framework.
+
+```
+cargo run --bin server_rocket
+```
+
+Start the server with Axum framework.
+
+```
+cargo run --bin server_axum
+```
+
+## REST API Documentation
 
 See [HERE](https://documenter.getpostman.com/view/8662105/2sBXwtp8ws).
 
