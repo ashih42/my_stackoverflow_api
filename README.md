@@ -1,4 +1,4 @@
-# My StackOverflow API (Rocket)
+# My StackOverflow API (Rocket vs Axum)
 
 This is a simple [StackOverflow](https://stackoverflow.com/)-like API server, which talks to a Postgres database server and returns data over HTTP messages through a REST API.
 
