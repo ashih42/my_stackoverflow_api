@@ -3,7 +3,7 @@ use time::OffsetDateTime; // This is used in unit tests.
 
 use crate::{
     models::{Answer, AnswerDetail, AnswerId, DBError, Question, QuestionDetail, QuestionId},
-    persistance::{answers_dao::AnswersDao, questions_dao::QuestionsDao},
+    persistence::{answers_dao::AnswersDao, questions_dao::QuestionsDao},
 };
 
 #[derive(Debug, PartialEq)]
@@ -28,7 +28,7 @@ pub async fn create_question(
     match question {
         Ok(question) => Ok(question),
         Err(err) => {
-            error!("{:?}", err);
+            log::error!("{:?}", err);
             Err(HandlerError::default_internal_error())
         }
     }
@@ -43,7 +43,7 @@ pub async fn read_questions(
     match questions {
         Ok(questions) => Ok(questions),
         Err(err) => {
-            error!("{:?}", err);
+            log::error!("{:?}", err);
             Err(HandlerError::default_internal_error())
         }
     }
@@ -75,7 +75,7 @@ pub async fn create_answer(
     match answer {
         Ok(answer) => Ok(answer),
         Err(err) => {
-            error!("{:?}", err);
+            log::error!("{:?}", err);
 
             match err {
                 DBError::InvalidUUID(s) => Err(HandlerError::BadRequest(s)),
@@ -94,8 +94,8 @@ pub async fn read_answers(
 
     match answers {
         Ok(answers) => Ok(answers),
-        Err(e) => {
-            error!("{:?}", e);
+        Err(err) => {
+            log::error!("{:?}", err);
             Err(HandlerError::default_internal_error())
         }
     }
@@ -123,6 +123,7 @@ pub async fn delete_answer(
 mod tests {
     use super::*;
 
+    use async_trait::async_trait;
     use tokio::sync::Mutex;
 
     struct QuestionsDaoMock {

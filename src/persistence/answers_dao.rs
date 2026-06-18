@@ -66,7 +66,7 @@ impl AnswersDao for AnswersDaoImpl {
         sqlx::query!("DELETE FROM answers WHERE answer_uuid = $1", uuid)
             .execute(&self.db)
             .await
-            .map_err(|e| DBError::Other(Box::new(e)))?;
+            .map_err(|err| DBError::Other(Box::new(err)))?;
 
         Ok(())
     }
@@ -83,7 +83,7 @@ impl AnswersDao for AnswersDaoImpl {
         )
         .fetch_all(&self.db)
         .await
-        .map_err(|e| DBError::Other(Box::new(e)))?;
+        .map_err(|err| DBError::Other(Box::new(err)))?;
 
         Ok(answers)
     }

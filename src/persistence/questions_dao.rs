@@ -35,7 +35,7 @@ impl QuestionsDao for QuestionsDaoImpl {
         )
         .fetch_one(&self.db)
         .await
-        .map_err(|e| DBError::Other(Box::new(e)))?;
+        .map_err(|err| DBError::Other(Box::new(err)))?;
 
         Ok(question)
     }
@@ -48,7 +48,7 @@ impl QuestionsDao for QuestionsDaoImpl {
         sqlx::query!("DELETE FROM questions WHERE question_uuid = $1", uuid)
             .execute(&self.db)
             .await
-            .map_err(|e| DBError::Other(Box::new(e)))?;
+            .map_err(|err| DBError::Other(Box::new(err)))?;
 
         Ok(())
     }
@@ -57,7 +57,7 @@ impl QuestionsDao for QuestionsDaoImpl {
         let questions = sqlx::query_as!(QuestionDetail, "SELECT * FROM questions")
             .fetch_all(&self.db)
             .await
-            .map_err(|e| DBError::Other(Box::new(e)))?;
+            .map_err(|err| DBError::Other(Box::new(err)))?;
 
         Ok(questions)
     }

@@ -3,7 +3,7 @@ mod answers_tests {
 
     use crate::{
         models::{Answer, DBError, Question},
-        persistance::{
+        persistence::{
             answers_dao::{AnswersDao, AnswersDaoImpl},
             questions_dao::{QuestionsDao, QuestionsDaoImpl},
         },
@@ -308,7 +308,7 @@ mod questions_tests {
 
     use crate::{
         models::{DBError, Question},
-        persistance::questions_dao::{QuestionsDao, QuestionsDaoImpl},
+        persistence::questions_dao::{QuestionsDao, QuestionsDaoImpl},
     };
 
     #[sqlx::test]
